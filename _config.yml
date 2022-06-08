@@ -1,84 +1,53 @@
-# Site Settings
-lang: en
-title: Oxford Medical Imaging Research Group
-tagline: Bulma Clean Theme
-email: your-email@domain.com
-description: >
-  This is the official page of OXMedIS group.
-baseurl: "/bulma-clean-theme"
-url: "https://oxmedis.github.io/main/"
-permalink: pretty
-#favicon: /path/to/favicon.png
-gh_sponsor: chrisrhymes
-#hide_share_buttons: true
-#theme_color: '#eeeeee'
-#fixed_navbar: top
-#direction: one of <ltr, rtl, auto>, default: ltr
-theme: bulma-clean-theme
-remote_theme: chrisrhymes/bulma-clean-theme
+name: Awesome Research Group
+url: http://awesome.example.edu
 
-paginate: 5
-paginate_path: "/blog/page:num"
+exclude: [bibble, README.md, Makefile, screenshot.png]
 
-# Disqus Comments
-disqus:
-  # Leave shortname blank to disable comments site-wide.
-  # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
-  # shortname: my_disqus_shortname
-  shortname: csrhymes
+# colorize code snippets with the pygments module
+highlighter: pygments
 
+# The path structure for blog posts.
+permalink: /blog/:year/:month/:day/:title.html
 
-plugins:
-  - jekyll-sitemap
-  - jekyll-paginate
-  - jekyll-feed
-  - jekyll-seo-tag
-  - kramdown-parser-gfm
-  - jekyll-redirect-from
+# Sections on the "people" page.
+roles:
+  - key: faculty
+    name: Faculty
+  - key: staff
+    name: Staff
+  - key: postdoc
+    name: Researchers
+  - key: grad
+    name: Graduate Students
+  - key: ugrad
+    name: Undergraduate Students
+  - key: ugrad-alum
+    name: Past Undergraduate Students
+  - key: collab
+    name: Collaborators
+  - key: alum
+    name: Alumni
 
-exclude: 
-  - Gemfile
-  - clean-theme.gemspec
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
+# Number of news stories on the front page.
+front_page_news: 8
 
-livereload: true
+# Base pathname for links.
+base: ''
 
-sass:
-  style: compressed
-  source_dir: _sass
-
-#google_analytics: UA-code-here
-
-defaults:
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-      show_sidebar: true
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      author: "C.S. Rhymes"
-      layout: post
-      image: https://via.placeholder.com/1200x800
-      show_sidebar: true
-
-markdown: kramdown
-highlighter: rouge
-
-footer_menu: example_footer_menu
-
+# make pages for the _projects folder
 collections:
-  products: 
+  projects:
     output: true
-    layout: product
-    image: https://via.placeholder.com/800x600
-    show_sidebar: false
+
+# Navigation bar links.
+navigation:
+  - title: Home
+    link: /
+  - title: People
+    link: /#people
+  - title: Research
+    link: /research.html
+  - title: Publications
+    link: /publications.html
+  - title: Code
+    link: /code.html

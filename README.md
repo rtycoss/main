@@ -1,65 +1,125 @@
-# bulma-clean-theme
+Research Group Web Site Template
+================================
 
-[![Gem Version](https://badge.fury.io/rb/bulma-clean-theme.svg)](https://badge.fury.io/rb/bulma-clean-theme)
-![Gem](https://img.shields.io/gem/dt/bulma-clean-theme.svg)
+This is a [Jekyll][]-based Web site intended for research groups. Your group should be able to get up and running with minimal fuss.
 
-This is a clean and simple Jekyll Theme built with the [Bulma](https://bulma.io/) framework, providing a modern-looking site to start with. 
+<p align="center">
+<img src="screenshot.png" width="387" height="225" alt="screenshot of the template">
+</p>
 
-The theme uses [Alpine.js](https://github.com/alpinejs/alpine) for its interactive components, such as mobile navbar and notifications.
+This project originated at the University of Washington.  You can see the machinery working live at [our site][sampa].
 
-## Contents
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License][license].
 
-* [Installation](#installation)
-* [Documentation](#documentation)
-* [Contributing](#contributing)
-* [Development](#development)
-* [Licence](#licence)
+[sampa]: http://sampa.cs.washington.edu/
+[license]: https://creativecommons.org/licenses/by-nc/4.0/
 
 
-## Installation
+Features
+--------
 
-Add this line to your Jekyll site's `Gemfile`:
+* Thanks to [Jekyll][], content is just text files. So even faculty should be able to figure it out.
+* Publications list generated from BibTeX.
+* Personnel list. Organize your professors, students, staff, and alumni.
+* Combined news stream and blog posts.
+* Easily extensible navigation bar.
+* Responsive (mobile-ready) design based on [Bootstrap][].
 
-```ruby
-gem "bulma-clean-theme"
-```
+[Bootstrap]: http://getbootstrap.com/
 
-And add this line to your Jekyll site's `_config.yml`:
 
-```yaml
-theme: bulma-clean-theme
-```
+Setup
+-----
 
-If you are deploying to GitHub pages, then you can also install the [GitHub Pages gem](https://github.com/github/pages-gem) and use `remote_theme` instead of `theme` in your `_config.yml`. **Note that the GitHub Pages gem requires Jekyll version 3.9.**
+1. Install the dependencies. You will need [Python][], [bibble][] (`pip install bibble`), and [Jekyll][] (`gem install jekyll`).
+2. [Fork][] this repository on GitHub.
+3. Clone the fork to your own machine: `git clone git@github.com:yourgroup/research-group-web.git`.
+4. Add an "upstream" remote for the original repository so you can stay abreast of bugfixes: `git remote add upstream https://github.com/uwsampa/research-group-web.git`.
+5. Customize. Start with the `_config.yml` file, where you enter the name of the site and its URL.
+6. Type `make` to build the site and then run `make serve` to view your site.
+7. Keep adding content. See below for instructions for each of the various sections.
+8. Periodically pull from the upstream repository: `git pull upstream master`.
 
-```yaml
-# With GitHub Pages Gem
-remote_theme: chrisrhymes/bulma-clean-theme
-```
+[Python]: https://www.python.org/
+[Fork]: https://github.com/uwsampa/research-group-web/fork
 
-And then execute:
 
-    $ bundle
+Publication List
+----------------
 
-Or install it yourself as:
+The list of publications is in `bib/pubs.bib`. Typing `make` will generate `pubs.html`, which contains a pretty, sorted HTML-formatted list of papers. The public page, `publications.html`, also has a link to download the original BibTeX.
 
-    $ gem install bulma-clean-theme
 
-## Documentation
+News Items and Blog Posts
+-------------------------
 
-Check out the demo site for the [Documentation](https://www.csrhymes.com/bulma-clean-theme/docs/)
+For both long-form blog posts and short news updates, we use Jekyll's blogging system. To post a new item of either type, you create a file in the `_posts` directory using the naming convention `YYYY-MM-DD-title-for-url.md`. The date part of the filename always matters; the title part is currently only used for full blog posts (but is still required for news updates).
 
-## Contributing
+The file must begin with [YAML front matter][yfm]. For news updates, use this:
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/chrisrhymes/bulma-clean-theme. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+    ---
+    layout: post
+    shortnews: true
+    ---
 
-## Development
+For full blog posts, use this format:
 
-To set up your environment to develop this theme, run `bundle install`.
+    ---
+    layout: post
+    title:  "Some Great Title Here"
+    ---
 
-Your theme is set up just like a normal Jekyll site! To test your theme, run `bundle exec jekyll serve` and open your browser at `http://localhost:4000`. This starts a Jekyll server using your theme. Add pages, documents, data, etc. like normal to test your theme's contents. As you make modifications to your theme and to your content, your site will regenerate and you should see the changes in the browser after a refresh, just like normal.
+And concoct a page title for your post. The body of the post goes after the `---` in either case.
 
-## License
+You can also customize the icon that is displayed on the news feed. By default it's `newspaper-o`. We use icons from the [FontAwesome][fa] icon set.
 
-The theme is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+[yfm]: http://jekyllrb.com/docs/frontmatter/
+[fa]: http://fontawesome.io/icons/
 
+Projects
+--------
+
+To create a project, just create a markdown file in the `_projects` folder. Here are the things you can put in the YAML frontmatter:
+
+- `title:` The project title.
+- `notitle:` Set this to `true` if you don't want a title displayed on the project card. Optional.
+- `description:` The text shown in the project card. It supports markdown.
+- `people:` The people working on the project. This is a list of keys from the `_data/people.yml` file.
+- `layout: project` This sets the layout of the actual project page. It should be set to `project`.
+- `image:` The URL of an image for the project. This is shown on both the project page and the project card. Optional.
+- `last-updated:` Date in the format of `YYYY-MM-DD`. The project cards are sorted by this, most recent first.
+- `status: inactive` Set this to `inactive` if don't want the project to appear on the front page. Just ignore it otherwise.
+- `link:` Set this to an external URL if this project has a page somewhere else on the web. If you don't have a `link:`, then the content of this markdown file (below the YAML frontmatter) will be this project's page.
+- `no-link: true` Set this if you just don't want a project page for your project.
+
+Personnel
+---------
+
+People are listed in a [YAML][] file in `_data/people.yml`. You can list the name, link, bio, and role of each person. Roles (e.g., "Faculty", "Staff", and "Students") are defined in `_config.yml`.
+
+[YAML]: https://en.wikipedia.org/wiki/YAML
+
+
+Building
+--------
+
+The requirements for building the site are:
+
+* [Jekyll][]: run `gem install jekyll`
+* [bibble][]: available on `pip`
+* ssh and rsync, only if you want to deploy directly.
+
+`make` compiles the bibliography and the website content to the `_site`
+directory. To preview the site, run `jekyll serve`` and head to
+http://0.0.0.0:5000.
+
+
+Deploying to Your Sever
+-----------------------
+
+To set up deployments, edit the Makefile and look for the lines where `HOST` and `DIR` are defined. Change these to the host where your HTML files should be copied to.
+
+To upload a new version of the site via rsync over ssh, type `make deploy`. A web hook does this automatically when you push to GitHub. Be aware that the Makefile is configured to have rsync delete stray files from the destination directory.
+
+[Jekyll]: http://jekyllrb.com/
+[bibble]: https://github.com/sampsyo/bibble/
